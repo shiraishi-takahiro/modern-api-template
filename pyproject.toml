@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling>=1.26.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fastapi-users-service"
+version = "0.1.0"
+description = "Type-safe FastAPI service for managing users."
+authors = [{ name = "Your Name", email = "you@example.com" }]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0,<1.0.0",
+    "pydantic>=2.9.0,<3.0.0",
+    "uvicorn[standard]>=0.30.0,<1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pyright>=1.1.380,<2.0.0",
+    "ruff>=0.6.0,<1.0.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [{ include = "app", from = "src" }]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/app",
+    "pyproject.toml",
+    "README.md",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I", "UP"]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+pythonVersion = "3.11"
+reportMissingTypeStubs = false
+venvPath = ".venv"
+stubPath = "typings"
+executionEnvironments = [
+    { root = "src" },
+]
